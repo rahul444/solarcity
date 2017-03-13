@@ -42,7 +42,7 @@ app.post('/submitUserInfo', function(req, res) {
 });
 
 /**
- * Get user info from the DB using the user's name and address.
+ * Get user info from the DB using the user's name and address as the query.
  */
 app.get('/getUserInfo', function(req, res) {
     var name = req.query.name;
