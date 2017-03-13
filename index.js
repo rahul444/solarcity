@@ -12,6 +12,9 @@ app.listen(port, function() {
     console.log('listening on port: ' + port)
 });
 
+/**
+ * Connect to mongodb database. In production, the credientials would not be stored in plain text.
+ */
 MongoClient.connect('mongodb://solarcity:solarCity1@ds129260.mlab.com:29260/solar-city', (err, database) => {
     if (err) return console.log(err);
     db = database;
@@ -22,8 +25,6 @@ MongoClient.connect('mongodb://solarcity:solarCity1@ds129260.mlab.com:29260/sola
 
 app.get('/', function(req, res) {
     res.sendFile(path.join(__dirname + '/index.html'));
-    var recents = db.collection('userinfo').find().sort({_id:1}).limit(50);
-    console.log(recents);
 });
 
 /**
@@ -35,6 +36,7 @@ app.post('/submitUserInfo', function(req, res) {
     var address = req.body.address;
     var interest = req.body.interest;
 
+    // store info in db using name + address as the primary key.
     db.collection('userinfo').insert({"_id" : name + '_' + address, [name] : {"age":age, "address":address, "interest":interest}});
 
     console.log(req.body);
@@ -50,9 +52,10 @@ app.get('/getUserInfo', function(req, res) {
 
     db.collection('userinfo').findOne({"_id" : name + '_' + address}, function(err, doc) {
         if (doc) {
-            res.send(doc);
-        } else if (err) {
-            console.log(err);
+            res.send(name + "'s reason for interest in SolarCity: " + doc[name]['interest']);
+        } else {
+            if (err) console.log(err);
+            res.send("No records for " + name + " were found.");
         }
     });
 });
