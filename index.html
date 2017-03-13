@@ -4,10 +4,29 @@
     </head>
 
     <body>
-        <h1>SolarCity Reviews</h1>
-        <div>
-            Simple app to post and view reviews.
-        </div>
-    </body>
+        <h1>SolarCity Interest Form</h1>
+        <h3>Record your interest here:</h3>
+        <form id="submitUserInfo" action="/submitUserInfo" method="post">
+            Full Name:<br>
+            <input type="text" name="name" placeholder="Enter full name" required><br>
+            Age:<br>
+            <input type="number" name="age" placeholder="Enter your age" required><br>
+            Address:<br>
+            <input type="text" name="address" placeholder="Enter address" required><br>
+            Why are you interested in SolarCity?<br>
+            <textarea rows="4" cols="50" type="text" name="interest" placeholder="Enter reason for interest" required></textarea><br>
+            <input type="submit">
+        </form>
 
+        <br>
+        <br>
+        <h3>Get user info:</h3>
+        <form id="getUserInfo" action="/getUserInfo" method="get">
+            Full Name:<br>
+            <input type="text" name="name" placeholder="Enter full name" required><br>
+            Address:<br>
+            <input type="text" name="address" placeholder="Enter address" required><br>
+            <input type="submit">
+        </form>
+    </body>
 </html>
